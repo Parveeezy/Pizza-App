@@ -1,29 +1,32 @@
 import {Headling} from "../../components/Headling/Headling.tsx";
 import {Search} from "../../components/Search/Search.tsx";
 import styles from "./Menu.module.css"
-import ProductCard from "../../components/ProductCard/ProductCard.tsx";
 import {PREFIX} from "../../healpers/API.ts";
 import type {Product} from "../../interfaces/product.interface.ts";
 import {useEffect, useState} from "react";
-import axios from "axios";
+import axios, {AxiosError} from "axios";
+import {MenuList} from "./MenuList/MenuList.tsx";
+
 
 const Menu = () => {
 
     const [products, setProducts] = useState<Product[]>([])
     const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [error, setError] = useState<string | undefined>('')
 
     const getMenu = async () => {
         try {
-            await new Promise<void>((res) => {
-                setTimeout(() => {
-                    res()
-                }, 5000)
-            })
+            setIsLoading(true)
             const {data} = await axios.get<Product[]>(`${PREFIX}/products`)
             setProducts(data)
         } catch (err) {
-            console.log(err)
+            if(err instanceof AxiosError) {
+                console.log(err)
+                setError(err.message)
+            }
             return
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -38,17 +41,9 @@ const Menu = () => {
                 <Search placeholder='Введите блюдо или состав'/>
             </div>
             <div className={styles['products']}>
-                {products.map(el => (
-                    <ProductCard
-                        key={el.id}
-                        id={el.id}
-                        name={el.name}
-                        description={el.ingredients.join(', ')}
-                        image={el.image}
-                        price={el.price}
-                        rating={el.rating}/>
-
-                ))}
+                {error && <div>{error}</div>}
+                {!isLoading && <MenuList products={products} />}
+                {isLoading && <>Loading</>}
             </div>
         </>
     );
