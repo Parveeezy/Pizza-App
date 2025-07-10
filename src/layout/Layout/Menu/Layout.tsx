@@ -1,6 +1,6 @@
 import {NavLink, Outlet} from "react-router-dom";
 import styles from './Layout.module.css'
-import {Button} from "../../components/Button/Button.tsx";
+import {Button} from "../../../components/Button/Button.tsx";
 import cn from 'classnames'
 
 export const Layout = () => {
@@ -9,7 +9,7 @@ export const Layout = () => {
         <div className={styles['layout']}>
             <div className={styles['sidebar']}>
                 <div className={styles['user']}>
-                    <img src="../../../public/Avatar.png" alt="" className={styles['avatar']}/>
+                    <img src="../../../../public/Avatar.png" alt="" className={styles['avatar']}/>
                     <div>
                         <h2 className={styles['user-name']}>Parviz Shirinov</h2>
                         <p className={styles['user-email']}>email@email.com</p>
@@ -19,18 +19,18 @@ export const Layout = () => {
                     <NavLink to="/" className={({isActive}) => cn(styles['link'], {
                         [styles.active]: isActive
                     })}>
-                        <img src="../../../public/Document.svg" alt="Menu"/>
+                        <img src="../../../../public/Document.svg" alt="Menu"/>
                         Меню
                     </NavLink>
                     <NavLink to="/cart" className={({isActive}) => cn(styles['link'], {
                         [styles.active]: isActive
                     })}>
-                        <img src="../../../public/cart.svg" alt="Cart"/>
+                        <img src="../../../../public/cart.svg" alt="Cart"/>
                         Корзина
                     </NavLink>
                 </div>
                 <Button className={styles['exit']}>
-                    <img src="../../../public/exit.svg" alt="Exit"/>
+                    <img src="../../../../public/exit.svg" alt="Exit"/>
                     Выход
                 </Button>
             </div>
