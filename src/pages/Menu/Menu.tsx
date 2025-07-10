@@ -40,7 +40,7 @@ const Menu = () => {
                 <Headling> Меню</Headling>
                 <Search placeholder='Введите блюдо или состав'/>
             </div>
-            <div className={styles['products']}>
+            <div>
                 {error && <div>{error}</div>}
                 {!isLoading && <MenuList products={products} />}
                 {isLoading && <>Loading</>}
