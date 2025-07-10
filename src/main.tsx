@@ -1,5 +1,4 @@
 import {lazy, StrictMode, Suspense} from 'react'
-import {createRoot} from 'react-dom/client'
 import './index.css'
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import Cart from "./pages/Cart/Cart.tsx";
@@ -11,13 +10,15 @@ import {PREFIX} from "./healpers/API.ts";
 import {AuthLayout} from "./layout/Layout/AuthLayout/AuthLayout.tsx";
 import {Login} from "./pages/Login/Login.tsx";
 import Register from "./pages/Register/Register.tsx";
+import {RequireAuth} from "./healpers/RequireAuth.tsx";
+import {createRoot} from "react-dom/client";
 
 const Menu = lazy(() => import('./pages/Menu/Menu'))
 
 const router = createBrowserRouter([
     {
         path: '/',
-        element: <Layout/>,
+        element: <RequireAuth><Layout/></RequireAuth>,
         children: [
             {
                 path: '/',

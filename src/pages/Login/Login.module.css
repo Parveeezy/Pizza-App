@@ -47,3 +47,7 @@
 .links a:hover{
     color: var(--primary-hover-color);
 }
+
+.error {
+    color: red;
+}
