@@ -49,5 +49,7 @@
 }
 
 .error {
-    color: red;
+    background-color: #efd52d;
+    padding: 20px;
+    color: var(--white-color);
 }
