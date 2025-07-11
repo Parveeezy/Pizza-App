@@ -9,7 +9,7 @@ import axios from "axios";
 import {PREFIX} from "./healpers/API.ts";
 import {AuthLayout} from "./layout/Layout/AuthLayout/AuthLayout.tsx";
 import {Login} from "./pages/Login/Login.tsx";
-import Register from "./pages/Register/Register.tsx";
+import {Register} from "./pages/Register/Register.tsx";
 import {RequireAuth} from "./healpers/RequireAuth.tsx";
 import {createRoot} from "react-dom/client";
 import {Provider} from "react-redux";

@@ -1,0 +1,55 @@
+.register {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 100%;
+    max-width: 600px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.field{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.field label{
+    color: rgb(196, 196, 196);
+    font-size: 17px;
+    font-weight: 400;
+}
+
+.links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.links p{
+    color: var(--text-secondary-color);
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.links a{
+    text-decoration: none;
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.links a:hover{
+    color: var(--primary-hover-color);
+}
+
+.error {
+    background-color: #efd52d;
+    padding: 20px;
+    color: var(--white-color);
+}

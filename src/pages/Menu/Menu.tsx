@@ -40,11 +40,11 @@ const Menu = () => {
                 <Headling> Меню</Headling>
                 <Search placeholder='Введите блюдо или состав'/>
             </div>
-            <div>
+            <>
                 {error && <div>{error}</div>}
                 {!isLoading && <MenuList products={products} />}
                 {isLoading && <>Loading</>}
-            </div>
+            </>
         </>
     );
 };
