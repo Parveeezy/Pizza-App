@@ -1,22 +1,17 @@
-import {forwardRef} from "react";
-import cn from "classnames";
-import styles from "./Search.module.css";
-import type {SearchProps} from "./Search.props.ts";
+import { forwardRef } from 'react';
+import styles from './Search.module.css';
+import cn from 'classnames';
+import { SearchProps } from './Search.props';
 
-export const Search = forwardRef<HTMLInputElement, SearchProps>(function Input(
-    {isValid = true, className, ...props},
-    ref
-) {
-    return (
-        <div className={styles['input-wrapper']}>
-            <input
-                {...props}
-                ref={ref}
-                className={cn(styles['input'], className, styles["input"], {
-                    [styles["invalid"]]: !isValid,
-                })}
-            />
-            <img className={styles['icon']} src="/search.svg" alt="search icon"/>
-        </div>
-    );
+const Search = forwardRef<HTMLInputElement, SearchProps>(function Input({ isValid = true, className, ...props }, ref) {
+	return (
+		<div className={styles['input-wrapper']}>
+			<input ref={ref} className={cn(styles['input'], className, {
+				[styles['invalid']]: isValid
+			})} {...props} />
+			<img className={styles['icon']} src='/search-icon.svg' alt='Иконка лупы' />
+		</div>
+	);
 });
+
+export default Search;

@@ -1,10 +1,6 @@
 .wrapper {
-    padding-top: 41px;
-    padding-left: 30px;
-    max-width: 700px;
-    display: flex;
-    flex-wrap: wrap;
-    flex-shrink: 1;
-    justify-content: space-between;
-    gap: 30px;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 40px;
+	margin-top: 30px;
 }

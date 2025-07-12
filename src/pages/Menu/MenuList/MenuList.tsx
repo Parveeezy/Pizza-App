@@ -1,20 +1,18 @@
-import ProductCard from "../../../components/ProductCard/ProductCard.tsx";
-import type {MenuListProps} from "./MenuList.props.ts";
-import styles from './MenuList.module.css'
+import ProductCard from '../../../components/ProductCard/ProductCard';
+import { MenuListProps } from './MenuList.props';
+import styles from './MenuList.module.css';
 
-export const MenuList = ({products}: MenuListProps) => {
-    return (
-        <div className={styles['wrapper']}>
-            {products.map((el) => (
-                <ProductCard
-                    key={el.id}
-                    id={el.id}
-                    name={el.name}
-                    description={el.ingredients.join(', ')}
-                    image={el.image}
-                    price={el.price}
-                    rating={el.rating}/>
-            ))}
-        </div>
-    )
-};
+export function MenuList({ products }: MenuListProps) {
+	return <div className={styles.wrapper}>{products.map(p => (
+		<ProductCard
+			key={p.id}
+			id={p.id}
+			name={p.name}
+			description={p.ingredients.join(', ')}
+			rating={p.rating}
+			price={p.price}
+			image={p.image}
+		/>
+	))}
+	</div>;
+}
