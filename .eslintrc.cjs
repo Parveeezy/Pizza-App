@@ -1,68 +1,114 @@
+const path = require('path');
+
 module.exports = {
 	root: true,
 	env: {
 		browser: true,
 		es2020: true,
-		node: true,     // Чтобы иметь возможность проверять NodeJS-код
-		jest: true,     // Если используешь Jest для тестирования
+		node: true,
 	},
 	extends: [
-		'eslint:recommended',                 // Используем базовые правила ESLint
-		'plugin:@typescript-eslint/recommended',  // Рекомендуемые правила для TypeScript
-		'plugin:react/recommended',           // Рекомендуемые правила для React
-		'plugin:react/jsx-runtime',          // Правила для JSX runtime (если используешь `<React.Fragment>` или `{...}`)
-		'plugin:import/errors',               // Для проверки импортов
-		'plugin:import/warnings',            // Предупреждения при импорте
-		'plugin:import/typescript',           // Специальная поддержка импорта для TypeScript
-		'plugin:redux-saga/recommended',      // Поддержка правил для Redux-Saga (если планируешь её использовать)
-		'prettier',                           // Отключаем конфликты между правилами ESLint и Prettier
+		'eslint:recommended',
+		'plugin:@typescript-eslint/recommended-type-checked',
+		'plugin:react/recommended',
+		'plugin:react-hooks/recommended',
+		'plugin:import/recommended',
+		'plugin:import/typescript',
+		'plugin:jsx-a11y/recommended',
 	],
-	ignorePatterns: ['dist', '.eslintrc.cjs'], // Игнорируем сборочные каталоги и сам config-файл
-	parser: '@typescript-eslint/parser',       // Типизированный парсер для TypeScript
+	parser: '@typescript-eslint/parser',
+	parserOptions: {
+		ecmaVersion: 'latest',
+		sourceType: 'module',
+		ecmaFeatures: {
+			jsx: true,
+		},
+		project: path.resolve(__dirname, 'tsconfig.json'),
+		tsconfigRootDir: __dirname,
+	},
 	plugins: [
-		'@typescript-eslint',                   // Плагин для поддержки TypeScript
-		'react',                                // Базовые плагины для React
-		'react-refresh',                        // Для hot-reloading компонентов
-		'import',                               // Подсказки для импорта модулей
-		'redux-saga',                           // Для проверок связанных с redux-saga
-		'prettier',                             // Для отключения конфликтов с Prettier
+		'@typescript-eslint',
+		'react',
+		'react-hooks',
+		'import',
+		'jsx-a11y',
 	],
 	settings: {
 		react: {
-			version: 'detect',                    // Автоматически определяем версию React
+			version: 'detect',
 		},
 		'import/resolver': {
-			typescript: {},                       // Разрешаем модульные пути для TypeScript
+			typescript: {
+				alwaysTryTypes: true,
+				project: path.resolve(__dirname, 'tsconfig.json'),
+			},
+			node: {
+				extensions: ['.js', '.jsx', '.ts', '.tsx'],
+			},
 		},
+	},
+	rules: {
+		// Основные правила
+		'no-console': 'warn',
+		'no-unused-vars': 'off',
+		'no-extra-semi': 'error',
+
+		// Импорты
+		'import/no-unresolved': 'error',
+		'import/no-named-as-default': 'off',
+		'import/order': [
+			'error',
+			{
+				groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
+				'newlines-between': 'always',
+				alphabetize: { order: 'asc', caseInsensitive: true },
+			},
+		],
+		'import/extensions': [
+			'error',
+			'ignorePackages',
+			{
+				js: 'never',
+				jsx: 'never',
+				ts: 'never',
+				tsx: 'never',
+			},
+		],
+
+		// React
+		'react/react-in-jsx-scope': 'off',
+		'react/jsx-filename-extension': ['error', { extensions: ['.tsx', '.jsx'] }],
+		'react/prop-types': 'off',
+		'react-hooks/rules-of-hooks': 'error',
+		'react-hooks/exhaustive-deps': 'warn',
+
+		// TypeScript
+		'@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+		'@typescript-eslint/explicit-function-return-type': "off",
+		'@typescript-eslint/no-floating-promises': 'error',
+		'@typescript-eslint/consistent-type-imports': 'warn',
 	},
 	overrides: [
 		{
-			files: ['*.ts', '*.tsx'],              // Применяем специфические правила только для TypeScript-файлов
+			files: ['*.config.{js,ts}', '**/__tests__/**'],
+			env: {
+				node: true,
+			},
 			rules: {
-				'@typescript-eslint/no-explicit-any': 'off',  // Пока отключим предупреждение об использовании any (можно включить позже)
-				'@typescript-eslint/ban-ts-comment': 'warn',  // Строгость против комментариев типа `//@ts-ignore`
-				'@typescript-eslint/no-empty-function': 'off', // Отключаем правило пустых функций временно
-				'@typescript-eslint/no-non-null-assertion': 'off', // Операторы принудительного исключения null допустимы пока
-				'@typescript-eslint/camelcase': 'off',         // Правилу именования camelCase не будем следовать строго
-				'@typescript-eslint/explicit-module-boundary-types': 'off', // Отключено временное требование типов границ модуля
-				'@typescript-eslint/no-use-before-define': 'off', // Отключаем строгий порядок объявления переменных
-				'@typescript-eslint/no-var-requires': 'off',    // Можно временно разрешить require()
-				'@typescript-eslint/no-inferrable-types': 'off', // Ограничение типов, выводимых компилятором, временно отключаем
-				'@typescript-eslint/consistent-type-definitions': ['error', 'interface'], // Интерфейсы предпочтительнее
-				'@typescript-eslint/member-delimiter-style': ['error', { multiline: { delimiter: 'none', requireLast: false }, singleline: { delimiter: 'semi', requireLast: false } }],
-				'react/react-in-jsx-scope': 'off',                // React объявлен глобально
-				'react/jsx-filename-extension': ['error', { extensions: ['.tsx'] }], // Компоненты в файлах *.tsx
-				'react/jsx-props-no-spreading': 'off',           // Позволяет распространять props
-				'react/jsx-key': 'error',                         // Требует key-пропсов для элементов массива
-				'react-hooks/exhaustive-deps': 'warn',           // Полезно следить за зависимостями useEffect
-				'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off', // Запрещаем console.log в продакшене
-				'no-unused-vars': 'off',                          // Это контролируется типом TypeScript
-				'@typescript-eslint/no-unused-vars': ['error'],   // Включаем TypeScript-проверку неиспользуемых переменных
-				semi: ['error', 'always'],                        // Точка с запятой обязательна везде
-				'comma-dangle': ['error', 'never'],              // Без висячих запятых
-				quotes: ['error', 'single'],                      // Одинарные кавычки
-				indent: ['error', 'tab'],                         // Табуляция для отступов
+				'@typescript-eslint/no-var-requires': 'off',
 			},
 		},
+		{
+			files: ['**/*.tsx'],
+			rules: {
+				'react/prop-types': 'off',
+			},
+		},
+	],
+	ignorePatterns: [
+		'dist',
+		'node_modules',
+		'*.d.ts',
+		'vite.config.ts',
 	],
 };

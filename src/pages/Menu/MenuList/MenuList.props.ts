@@ -1,5 +1,5 @@
-import { Product } from '../../../interfaces/product.interface';
+import type { Product } from '../../../interfaces/product.interface';
 
 export interface MenuListProps {
-	products: Product[];
+  products: Product[];
 }
